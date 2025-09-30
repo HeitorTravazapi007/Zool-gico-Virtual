@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "Wwa3jmmCfrEwqyGgJupIWbJeZ/3qnt6FEstOmLghPek=",
+  "Source": "CrundApi",
+  "BasePath": "_content/CrundApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
