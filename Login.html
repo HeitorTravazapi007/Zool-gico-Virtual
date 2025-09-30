@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/formu.png" type="image/x-icon">
+    <title>Login - Fauna Explorer</title>
+    <style>
+        :root {
+            --primary-bg: #1b0526;
+            --card-bg: #2a1236;
+            --accent: #ffd700;
+            --secondary: #5e33a6;
+            --secondary-hover: #7b4dbf;
+            --text: #fff;
+            --text-secondary: #c7b8d9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: var(--primary-bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .menu-icon {
+            color: var(--accent);
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 55px;
+            right: 20px;
+            background-color: #3D2763;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            min-width: 150px;
+            z-index: 1000;
+        }
+
+            .dropdown-menu a {
+                color: white;
+                padding: 12px 16px;
+                border-radius: 10px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-menu a:hover {
+                    background-color: #2F1F4F;
+                }
+
+        .geral {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 32px;
+            color: var(--accent);
+            text-shadow: 1px 1px 4px #000;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            background: #3e1f5b;
+            color: var(--text);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+            transition: background 0.3s;
+        }
+
+            input:hover, input:focus {
+                background: var(--secondary);
+                outline: none;
+            }
+
+            input::placeholder {
+                color: var(--text-secondary);
+            }
+
+        button {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            background: var(--secondary);
+            color: var(--text);
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 10px;
+        }
+
+            button:hover {
+                background: var(--secondary-hover);
+                transform: translateY(-2px);
+            }
+    </style>
+</head>
+<body>
+
+    <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+
+    <div id="dropdown" class="dropdown-menu">
+        <a href="inicio.html">Início</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="#">Login</a>
+    </div>
+
+    <div class="geral">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Usuário">
+        <input type="password" id="password" placeholder="Senha">
+        <button onclick="login()">Login</button>
+    </div>
+</body>
+</html>
+
+<script>
+    function toggleMenu() {
+const menu = document.getElementById("dropdown");
+if (menu.style.display === "block") {
+  menu.style.display = "none";
+} else {
+  menu.style.display = "block";
+}
+}
+
+window.onclick = function(event) {
+const menu = document.getElementById("dropdown");
+const btn = document.querySelector(".menu-icon");
+if (event.target !== menu && event.target !== btn) {
+  menu.style.display = "none";
+    }
+}
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            document.getElementById("dropdown").style.display = "none";
+        }
+    });
+    function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // CORREÇÃO: Use os nomes de propriedade corretos (minúsculo)
+        const loginData = {
+            cpf: username,
+        senha: password
+        };
+
+        // Enviar dados de login para o servidor
+        fetch('https://localhost:7055/Login', {
+            method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+            },
+        body: JSON.stringify(loginData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na rede');
+            }
+        return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+            localStorage.setItem('authenticated', 'true');
+        localStorage.setItem('token', data.token);
+        window.location.href = 'Animais.html';
+            } else {
+            alert('Login falhou. Verifique suas credenciais.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        alert('Erro de conexão com o servidor.');
+        });
+    }
+
+        // Adicione também o login com Enter
+        document.getElementById('password').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            login();
+        }
+    });
+</script>

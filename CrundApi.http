@@ -1,0 +1,6 @@
+@CrundApi_HostAddress = http://localhost:5109
+
+GET {{CrundApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

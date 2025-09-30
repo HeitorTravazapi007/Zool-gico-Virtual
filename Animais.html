@@ -1,0 +1,470 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/patas.png" type="image/x-icon">
+    <title>Cadastrar Animais</title>
+    <style>
+        :root {
+            --primary-bg: #1b0526;
+            --card-bg: #2a1236;
+            --accent: #ffd700;
+            --secondary: #5e33a6;
+            --secondary-hover: #7b4dbf;
+            --text: #fff;
+            --text-secondary: #c7b8d9;
+            --input-bg: #3e1f5b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: var(--primary-bg);
+            color: var(--text);
+        }
+
+        .menu-icon {
+            color: var(--accent);
+            font-size: 30px;
+            cursor: pointer;
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: fixed;
+            top: 55px;
+            right: 20px;
+            background-color: #3D2763;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            min-width: 150px;
+            z-index: 1000;
+        }
+
+            .dropdown-menu a {
+                color: white;
+                padding: 12px 16px;
+                border-radius: 10px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-menu a:hover {
+                    background-color: #2F1F4F;
+                }
+
+        .geral {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            width: 90%;
+            max-width: 1200px;
+            margin: 60px auto 20px auto;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: var(--accent);
+            text-shadow: 1px 1px 4px #000;
+            border-bottom: 2px solid var(--input-bg);
+            padding-bottom: 10px;
+        }
+
+        form {
+            background: rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: var(--text-secondary);
+        }
+
+        input {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            background: var(--input-bg);
+            color: var(--text);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+            transition: background 0.3s;
+        }
+
+            input:hover, input:focus {
+                background: var(--secondary);
+                outline: none;
+            }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            background: var(--secondary);
+            color: var(--text);
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            transition: background 0.3s, transform 0.2s;
+            align-self: flex-start;
+        }
+
+            button:hover {
+                background: var(--secondary-hover);
+                transform: translateY(-2px);
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--input-bg);
+        }
+
+        thead th {
+            background-color: var(--input-bg);
+            color: var(--accent);
+            font-size: 16px;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        td button {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #ff4757;
+        }
+
+            td button:hover {
+                background-color: #e03141;
+            }
+    </style>
+</head>
+<body>
+
+    <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+
+    <div id="dropdown" class="dropdown-menu">
+        <a href="inicio.html">Início</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="Login.html">Login</a>
+    </div>
+
+    <div class="geral">
+        <h2>Animais Cadastrados</h2>
+
+        <table id="animalTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Espécie</th>
+                    <th>Habitate</th>
+                    <th>Dieta</th>
+                    <th>Peso</th>
+                    <th>Curiosidades</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <h2>Adicionar Animal</h2>
+        <form id="addAnimalForm">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" required>
+
+            <label for="especie">Espécie:</label>
+            <input type="text" id="especie" required>
+
+            <label for="habitate">Habitate:</label>
+            <input type="text" id="habitate" required>
+
+            <label for="dieta">Dieta:</label>
+            <input type="text" id="dieta" required>
+
+            <label for="peso">peso:</label>
+            <input type="number" id="peso" required>
+
+            <label for="curiosidade">Curiosidade:</label>
+            <input type="text" id="curiosidade" required>
+
+            <button type="submit">Adicionar</button>
+        </form>
+
+        <h2>Atualizar Animal</h2>
+        <form id="updateAnimalForm">
+            <label for="updateId">ID do Animal:</label>
+            <input type="number" id="updateId" required>
+
+            <label for="updateNome">Nome:</label>
+            <input type="text" id="updateNome" required>
+
+            <label for="updateEspecie">Espécie:</label>
+            <input type="text" id="updateEspecie" required>
+
+            <label for="updateHabitate">Habitate:</label>
+            <input type="text" id="updateHabitate" required>
+
+            <label for="updateDieta">Dieta:</label>
+            <input type="text" id="updateDieta" required>
+
+            <label for="updatePeso">Peso:</label>
+            <input type="number" id="updatePeso" required>
+
+            <label for="updateCuriosidade">Curiosidade:</label>
+            <input type="text" id="updateCuriosidade" required>
+
+            <button type="submit">Atualizar</button>
+        </form>
+
+        <h2>Excluir Animal</h2>
+        <form id="deleteAnimalForm">
+            <label for="deleteId">ID do Animal:</label>
+            <input type="number" id="deleteId" required>
+
+            <button type="submit">Excluir</button>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+        // Função do menu (mantida igual)
+        function toggleMenu() {
+            const menu = document.getElementById("dropdown");
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "block";
+            }
+        }
+
+    window.onclick = function (event) {
+        const menu = document.getElementById("dropdown");
+        if (!event.target.matches('.menu-icon') && menu.style.display === 'block') {
+            if (!menu.contains(event.target)) {
+                menu.style.display = "none";
+            }
+        }
+    }
+
+    // CORREÇÃO: Função para buscar animais
+    function getAnimais() {
+        fetch('https://localhost:7055/Animais')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na rede');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const animalTable = document.getElementById('animalTable');
+                const tbody = animalTable.querySelector('tbody');
+                tbody.innerHTML = '';
+
+                data.forEach(animal => {
+                    const row = document.createElement('tr');
+
+                    // CORREÇÃO: IDs das propriedades em minúsculo
+                    const idCell = document.createElement('td');
+                    idCell.textContent = animal.id;
+                    row.appendChild(idCell);
+
+                    const nomeCell = document.createElement('td');
+                    nomeCell.textContent = animal.nome;
+                    row.appendChild(nomeCell);
+
+                    const especieCell = document.createElement('td');
+                    especieCell.textContent = animal.especie;
+                    row.appendChild(especieCell);
+
+                    const habitateCell = document.createElement('td');
+                    habitateCell.textContent = animal.habitate;
+                    row.appendChild(habitateCell);
+
+                    const dietaCell = document.createElement('td');
+                    dietaCell.textContent = animal.dieta;
+                    row.appendChild(dietaCell);
+
+                    const pesoCell = document.createElement('td');
+                    // CORREÇÃO: Formatação do peso
+                    pesoCell.textContent = `${animal.peso} kg`;
+                    row.appendChild(pesoCell);
+
+                    const curiosidadeCell = document.createElement('td');
+                    curiosidadeCell.textContent = animal.curiosidade;
+                    row.appendChild(curiosidadeCell);
+
+                    const actionsCell = document.createElement('td');
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Excluir';
+                    deleteButton.addEventListener('click', () => deleteAnimal(animal.id));
+                    actionsCell.appendChild(deleteButton);
+                    row.appendChild(actionsCell);
+
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao buscar animais:', error);
+                alert('Erro ao carregar animais: ' + error.message);
+            });
+    }
+
+    // CORREÇÃO: Função para adicionar animal
+    function addAnimal(event) {
+        event.preventDefault();
+
+        const nome = document.getElementById('nome').value;
+        const especie = document.getElementById('especie').value;
+        const habitate = document.getElementById('habitate').value;
+        const dieta = document.getElementById('dieta').value;
+        const peso = parseFloat(document.getElementById('peso').value); // CORREÇÃO: parseFloat
+        const curiosidade = document.getElementById('curiosidade').value;
+
+        const animal = {
+            nome: nome,
+            especie: especie,
+            habitate: habitate,
+            dieta: dieta,
+            peso: peso,
+            curiosidade: curiosidade
+        };
+
+        fetch('https://localhost:7055/Animais', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(animal)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Animal adicionado com sucesso!');
+                document.getElementById('addAnimalForm').reset();
+                getAnimais(); // CORREÇÃO: Nome da função corrigido
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao adicionar animal: ' + error.message);
+            });
+    }
+
+    // CORREÇÃO: Função para atualizar animal
+    function updateAnimal(event) {
+        event.preventDefault();
+
+        const id = parseInt(document.getElementById('updateId').value);
+        // CORREÇÃO: IDs dos campos de atualização
+        const nome = document.getElementById('updateNome').value;
+        const especie = document.getElementById('updateEspecie').value;
+        const habitate = document.getElementById('updateHabitate').value;
+        const dieta = document.getElementById('updateDieta').value;
+        const peso = parseFloat(document.getElementById('updatePeso').value);
+        const curiosidade = document.getElementById('updateCuriosidade').value;
+
+        const animal = {
+            nome: nome,
+            especie: especie,
+            habitate: habitate,
+            dieta: dieta,
+            peso: peso,
+            curiosidade: curiosidade
+        };
+
+        fetch(`https://localhost:7055/Animais/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(animal)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Animal atualizado com sucesso!');
+                document.getElementById('updateAnimalForm').reset();
+                getAnimais();
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao atualizar animal: ' + error.message);
+            });
+    }
+
+    // Função para excluir animal (mantida igual)
+    function deleteAnimal(id) {
+        if (!confirm('Tem certeza que deseja excluir este animal?')) {
+            return;
+        }
+
+        fetch(`https://localhost:7055/Animais/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Animal excluído com sucesso!');
+                getAnimais();
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao excluir animal: ' + error.message);
+            });
+    }
+
+    // Event listeners
+    document.getElementById('addAnimalForm').addEventListener('submit', addAnimal);
+    document.getElementById('updateAnimalForm').addEventListener('submit', updateAnimal);
+    document.getElementById('deleteAnimalForm').addEventListener('submit', event => {
+        event.preventDefault();
+        const id = parseInt(document.getElementById('deleteId').value);
+        deleteAnimal(id);
+        document.getElementById('deleteAnimalForm').reset();
+    });
+
+    // Carregar animais ao iniciar
+    getAnimais();
+</script>
+
+<!--<script src="app.js"></script> -->
